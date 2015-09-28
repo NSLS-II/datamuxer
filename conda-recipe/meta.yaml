@@ -1,5 +1,5 @@
 package:
-  name: dataportal
+  name: datamuxer
   version: {{ environ['GIT_DESCRIBE_TAG'] }}.post{{ environ['GIT_DESCRIBE_NUMBER'] }}
 
 source:
@@ -33,18 +33,10 @@ requirements:
 test:
   requires:
     - nslsii_dev_configuration
+    - databroker
   imports:
-    - dataportal
-    - dataportal.api
-    - dataportal.testing
-    - dataportal.examples
-    - dataportal.examples.sample_data
-    - dataportal.broker
-    - dataportal.muxer
-    - dataportal.sources
-    - dataportal.sources.dummy_sources
-    - dataportal.utils
+    - datamuxer
 
 about:
-  home: https://github.com/NSLS-II/dataportal
+  home: https://github.com/NSLS-II/datamuxer
   license: BSD

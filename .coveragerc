@@ -1,19 +1,13 @@
 [run]
 source = 
-    dataportal
-    replay
+    datamuxer.py
 
 [report]
 omit =
     */python?.?/*
     */site-packages/nose/*
     *test*
-    dataportal/__init__.py
-    dataportal/tests/*
-    dataportal/testing/*
-    # ignore _version.py and versioneer.py
-    .*version.*
-    *_version.py
+    test_muxer.py
 
 exclude_lines =
     if __name__ == '__main__':

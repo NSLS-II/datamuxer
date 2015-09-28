@@ -1,8 +1,3 @@
-import sys
-import warnings
-import versioneer
-
-
 try:
     from setuptools import setup
 except ImportError:
@@ -13,15 +8,8 @@ except ImportError:
 
 
 setup(
-    name='dataportal',
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    name='datamuxer',
+    version='v0.3.0',
     author='Brookhaven National Laboratory',
-    packages=['dataportal', 'dataportal.api', 'dataportal.testing',
-              'dataportal.examples',
-              'dataportal.examples.sample_data',
-              'dataportal.broker', 'dataportal.muxer',
-              'dataportal.sources', 'dataportal.sources.dummy_sources',
-              'dataportal.utils', 'dataportal.scans',
-              ],
+    py_modules=['datamuxer']
 )

@@ -7,11 +7,11 @@ import uuid
 import unittest
 import numpy as np
 
-from ..muxer.data_muxer import DataMuxer, BinningError, ColSpec
+from datamuxer import DataMuxer, BinningError, ColSpec
 
-from ..examples.sample_data import (temperature_ramp, multisource_event,
-                                    image_and_scalar)
-from ..broker import DataBroker
+from databroker.examples.sample_data import (temperature_ramp, multisource_event,
+                                             image_and_scalar)
+from databroker import DataBroker
 from filestore.utils.testing import fs_setup, fs_teardown
 from metadatastore.utils.testing import mds_setup, mds_teardown
 from metadatastore.api import insert_run_start

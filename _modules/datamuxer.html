@@ -1,0 +1,1079 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>datamuxer &mdash; DataMuxer 0.0.6 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="DataMuxer 0.0.6 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> DataMuxer</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.DataMuxer.html">datamuxer.DataMuxer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.DataMuxer.bin_by_edges.html">datamuxer.DataMuxer.bin_by_edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.DataMuxer.bin_on.html">datamuxer.DataMuxer.bin_on</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.DataMuxer.from_events.html">datamuxer.DataMuxer.from_events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.DataMuxer.to_sparse_dataframe.html">datamuxer.DataMuxer.to_sparse_dataframe</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.ColSpec.html">datamuxer.ColSpec</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.dataframe_to_dict.html">datamuxer.dataframe_to_dict</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.BinningError.html">datamuxer.BinningError</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated/datamuxer.BadDownsamplerError.html">datamuxer.BadDownsamplerError</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">DataMuxer</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>datamuxer</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for datamuxer</h1><div class="highlight"><pre>
+<span class="c"># ######################################################################</span>
+<span class="c"># Copyright (c) 2014, Brookhaven Science Associates, Brookhaven        #</span>
+<span class="c"># National Laboratory. All rights reserved.                            #</span>
+<span class="c">#                                                                      #</span>
+<span class="c"># Redistribution and use in source and binary forms, with or without   #</span>
+<span class="c"># modification, are permitted provided that the following conditions   #</span>
+<span class="c"># are met:                                                             #</span>
+<span class="c">#                                                                      #</span>
+<span class="c"># * Redistributions of source code must retain the above copyright     #</span>
+<span class="c">#   notice, this list of conditions and the following disclaimer.      #</span>
+<span class="c">#                                                                      #</span>
+<span class="c"># * Redistributions in binary form must reproduce the above copyright  #</span>
+<span class="c">#   notice this list of conditions and the following disclaimer in     #</span>
+<span class="c">#   the documentation and/or other materials provided with the         #</span>
+<span class="c">#   distribution.                                                      #</span>
+<span class="c">#                                                                      #</span>
+<span class="c"># * Neither the name of the Brookhaven Science Associates, Brookhaven  #</span>
+<span class="c">#   National Laboratory nor the names of its contributors may be used  #</span>
+<span class="c">#   to endorse or promote products derived from this software without  #</span>
+<span class="c">#   specific prior written permission.                                 #</span>
+<span class="c">#                                                                      #</span>
+<span class="c"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  #</span>
+<span class="c"># &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT    #</span>
+<span class="c"># LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS    #</span>
+<span class="c"># FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE       #</span>
+<span class="c"># COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,           #</span>
+<span class="c"># INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES   #</span>
+<span class="c"># (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR   #</span>
+<span class="c"># SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)   #</span>
+<span class="c"># HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,  #</span>
+<span class="c"># STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OTHERWISE) ARISING   #</span>
+<span class="c"># IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c"># POSSIBILITY OF SUCH DAMAGE.                                          #</span>
+<span class="c">########################################################################</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span><span class="p">,</span> <span class="n">deque</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">tzlocal</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+<span class="kn">import</span> <span class="nn">pandas.core.groupby</span>  <span class="c"># to get custom exception</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;DataMuxer&#39;</span><span class="p">,</span> <span class="s">&#39;dataframe_to_dict&#39;</span><span class="p">]</span>
+
+<span class="n">TZ</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tzlocal</span><span class="o">.</span><span class="n">get_localzone</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="BinningError"><a class="viewcode-back" href="../generated/datamuxer.BinningError.html#datamuxer.BinningError">[docs]</a><span class="k">class</span> <span class="nc">BinningError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An exception to raise if there are insufficient sampling rules to</span>
+<span class="sd">    upsampling or downsample a data column into specified bins.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+</div>
+<div class="viewcode-block" id="BadDownsamplerError"><a class="viewcode-back" href="../generated/datamuxer.BadDownsamplerError.html#datamuxer.BadDownsamplerError">[docs]</a><span class="k">class</span> <span class="nc">BadDownsamplerError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An exception to raise if a downsampler produces unexpected output.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+</div>
+<div class="viewcode-block" id="ColSpec"><a class="viewcode-back" href="../generated/datamuxer.ColSpec.html#datamuxer.ColSpec">[docs]</a><span class="k">class</span> <span class="nc">ColSpec</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span>
+              <span class="s">&#39;ColSpec&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;ndim&#39;</span><span class="p">,</span> <span class="s">&#39;shape&#39;</span><span class="p">,</span> <span class="s">&#39;upsample&#39;</span><span class="p">,</span> <span class="s">&#39;downsample&#39;</span><span class="p">])):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Named-tuple sub-class to validate the column specifications for the</span>
+<span class="sd">    DataMuxer</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : hashable</span>
+<span class="sd">    ndim : uint</span>
+<span class="sd">        Dimensionality of the data stored in the column</span>
+<span class="sd">    shape : tuple or None</span>
+<span class="sd">        like ndarray.shape, where 0 or None are scalar</span>
+<span class="sd">    upsample : {None, &#39;linear&#39;, &#39;nearest&#39;, &#39;zero&#39;, &#39;slinear&#39;, &#39;quadratic&#39;, &#39;cubic&#39;, &#39;ffill&#39;, &#39;bfill&#39;}</span>
+<span class="sd">        None means that each time bin must have at least one value.</span>
+<span class="sd">        The names refer to kinds of scipy.interpolator. See documentation</span>
+<span class="sd">        link below.</span>
+<span class="sd">    downsample : None or a function</span>
+<span class="sd">        None if the data cannot be downsampled (reduced). Otherwise,</span>
+<span class="sd">        any callable that reduces multiple data points (of whatever dimension)</span>
+<span class="sd">        to a single data point.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># These reflect the &#39;method&#39; argument of pandas.DataFrame.fillna</span>
+    <span class="n">upsampling_methods</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;None&#39;</span><span class="p">,</span> <span class="s">&#39;linear&#39;</span><span class="p">,</span> <span class="s">&#39;nearest&#39;</span><span class="p">,</span> <span class="s">&#39;zero&#39;</span><span class="p">,</span> <span class="s">&#39;slinear&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;quadratic&#39;</span><span class="p">,</span> <span class="s">&#39;cubic&#39;</span><span class="p">,</span> <span class="s">&#39;ffill&#39;</span><span class="p">,</span> <span class="s">&#39;bfill&#39;</span><span class="p">}</span>
+    <span class="n">downsampling_methods</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;None&#39;</span><span class="p">,</span> <span class="s">&#39;last&#39;</span><span class="p">,</span> <span class="s">&#39;first&#39;</span><span class="p">,</span> <span class="s">&#39;median&#39;</span><span class="p">,</span> <span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="s">&#39;sum&#39;</span><span class="p">,</span>
+                            <span class="s">&#39;min&#39;</span><span class="p">,</span> <span class="s">&#39;max&#39;</span><span class="p">}</span>
+    <span class="n">_downsample_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;last&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                           <span class="s">&#39;first&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                           <span class="c"># new in np 1.9</span>
+                           <span class="s">&#39;median&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                           <span class="s">&#39;mean&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                           <span class="s">&#39;sum&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                           <span class="s">&#39;min&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                           <span class="s">&#39;max&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">upsample</span><span class="p">,</span> <span class="n">downsample</span><span class="p">):</span>
+        <span class="c"># Validations</span>
+        <span class="n">upsample</span> <span class="o">=</span> <span class="n">_validate_upsample</span><span class="p">(</span><span class="n">upsample</span><span class="p">)</span>
+        <span class="n">downsample</span> <span class="o">=</span> <span class="n">_validate_downsample</span><span class="p">(</span><span class="n">downsample</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">ndim</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;ndim must be positive not {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ndim</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ColSpec</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span>
+            <span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">ndim</span><span class="p">),</span> <span class="n">shape</span><span class="p">,</span> <span class="n">upsample</span><span class="p">,</span> <span class="n">downsample</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_validate_upsample</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+    <span class="c"># TODO The upsampling method could be any callable.</span>
+    <span class="k">if</span> <span class="nb">input</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">input</span> <span class="o">==</span> <span class="s">&#39;None&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;None&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">input</span> <span class="ow">in</span> <span class="n">ColSpec</span><span class="o">.</span><span class="n">upsampling_methods</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;{} is not a valid upsampling method. It &quot;</span>
+                         <span class="s">&quot;must be one of {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                             <span class="nb">input</span><span class="p">,</span> <span class="n">ColSpec</span><span class="o">.</span><span class="n">upsampling_methods</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_validate_downsample</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+    <span class="c"># TODO The downsampling methods could have string aliases like &#39;mean&#39;.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="nb">callable</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="ow">or</span>
+                                     <span class="nb">input</span> <span class="ow">in</span> <span class="n">ColSpec</span><span class="o">.</span><span class="n">downsampling_methods</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The downsampling method must be a callable, None, &quot;</span>
+                         <span class="s">&quot;or one of {}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ColSpec</span><span class="o">.</span><span class="n">downsampling_methods</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">input</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;None&#39;</span>
+    <span class="k">return</span> <span class="nb">input</span>
+
+
+<div class="viewcode-block" id="DataMuxer"><a class="viewcode-back" href="../generated/datamuxer.DataMuxer.html#datamuxer.DataMuxer">[docs]</a><span class="k">class</span> <span class="nc">DataMuxer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class provides a wrapper layer of signals and slots</span>
+<span class="sd">    around a pandas DataFrame to make plugging stuff in for live</span>
+<span class="sd">    view easier.</span>
+
+<span class="sd">    The data collection/event model being used is all measurements</span>
+<span class="sd">    (that is values that come off of the hardware) are time stamped</span>
+<span class="sd">    to ring time.</span>
+
+<span class="sd">    The language being used through out is that of pandas data frames.</span>
+
+<span class="sd">    The data model is that of a sparse table keyed on time stamps which</span>
+<span class="sd">    is &#39;densified&#39; on demand by propagating measurements forwards.  Not</span>
+<span class="sd">    all measurements (ex images) can be filled.  This behavior is controlled</span>
+<span class="sd">    by the `col_info` tuple.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    events : list</span>
+<span class="sd">        list of Events (any object with the expected attributes will do)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">class</span> <span class="nc">Planner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dm</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dm</span> <span class="o">=</span> <span class="n">dm</span>
+
+        <span class="k">def</span> <span class="nf">determine_upsample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="s">&quot;Resolve (and if necessary validate) upsampling rules.&quot;</span>
+            <span class="k">if</span> <span class="n">interpolation</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">interpolation</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">use_cols</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">use_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">columns</span>
+            <span class="n">rules</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">use_cols</span><span class="p">:</span>
+                <span class="n">col_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">col_info</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                <span class="n">rule</span> <span class="o">=</span> <span class="n">_validate_upsample</span><span class="p">(</span>
+                    <span class="n">interpolation</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">col_info</span><span class="o">.</span><span class="n">upsample</span><span class="p">))</span>
+                <span class="n">rule</span> <span class="o">=</span> <span class="n">_normalize_string_none</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">rule</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">col_info</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                        <span class="s">&quot;Only scalar data can be upsampled. &quot;</span>
+                        <span class="s">&quot;The {0}-dimensional source {1} was given the &quot;</span>
+                        <span class="s">&quot;upsampling rule {2}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">col_info</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rule</span><span class="p">))</span>
+                <span class="n">rules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rule</span>
+            <span class="k">return</span> <span class="n">rules</span>
+
+        <span class="k">def</span> <span class="nf">determine_downsample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="s">&quot;Resolve (and if necessary validate) sampling rules.&quot;</span>
+            <span class="k">if</span> <span class="n">agg</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">agg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">use_cols</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">use_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">columns</span>
+            <span class="n">rules</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">use_cols</span><span class="p">:</span>
+                <span class="n">col_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">col_info</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                <span class="n">rule</span> <span class="o">=</span> <span class="n">_validate_downsample</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">col_info</span><span class="o">.</span><span class="n">downsample</span><span class="p">))</span>
+                <span class="n">rule</span> <span class="o">=</span> <span class="n">_normalize_string_none</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+                <span class="n">rules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rule</span>
+            <span class="k">return</span> <span class="n">rules</span>
+
+        <span class="k">def</span> <span class="nf">bin_by_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bin_edges</span><span class="p">,</span> <span class="n">bin_anchors</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                         <span class="n">agg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Explain operation of DataMuxer.bin_by_edges</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            bin_edges : list</span>
+<span class="sd">                list of two-element items like [(t1, t2), (t3, t4), ...]</span>
+<span class="sd">            bin_anchors : list</span>
+<span class="sd">                These are time points where interpolated values will be</span>
+<span class="sd">                evaluated. Bin centers are usually a good choice.</span>
+<span class="sd">            interpolation : dict, optional</span>
+<span class="sd">                Override the default interpolation (upsampling) behavior of any</span>
+<span class="sd">                data source by passing a dictionary of source names mapped onto</span>
+<span class="sd">                one of the following interpolation methods.</span>
+
+<span class="sd">                {None, &#39;linear&#39;, &#39;nearest&#39;, &#39;zero&#39;, &#39;slinear&#39;, &#39;quadratic&#39;,</span>
+<span class="sd">                &#39;cubic&#39;, &#39;ffill&#39;, &#39;bfill&#39;}</span>
+
+<span class="sd">                None means that each time bin must have at least one value.</span>
+<span class="sd">                See scipy.interpolator for more on the other methods.</span>
+<span class="sd">            agg : dict, optional</span>
+<span class="sd">                Override the default reduction (downsampling) behavior of any</span>
+<span class="sd">                data source by passing a dictionary of source names mapped onto</span>
+<span class="sd">                any callable that reduces multiple data points (of whatever</span>
+<span class="sd">                dimension) to a single data point.</span>
+<span class="sd">            use_cols : list, optional</span>
+<span class="sd">                List of columns to include in binning; use all columns by</span>
+<span class="sd">                default.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            df : pandas.DataFrame</span>
+<span class="sd">                table giving upsample and downsample rules for each data column</span>
+<span class="sd">                and indicating whether those rules are applicable</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">            http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">bin_anchors</span><span class="p">,</span> <span class="n">binning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">_bin_by_edges</span><span class="p">(</span><span class="n">bin_anchors</span><span class="p">,</span> <span class="n">bin_edges</span><span class="p">)</span>
+            <span class="c"># TODO Cache the grouping for reuse by resample.</span>
+            <span class="n">grouped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">_dataframe</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">binning</span><span class="p">)</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_is_resampling_applicable</span><span class="p">(</span><span class="n">counts</span><span class="p">))</span>
+            <span class="n">df</span><span class="p">[</span><span class="s">&#39;upsample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">determine_upsample</span><span class="p">(</span><span class="n">interpolation</span><span class="p">,</span> <span class="n">use_cols</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s">&#39;downsample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">determine_downsample</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="n">use_cols</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">df</span>
+
+        <span class="k">def</span> <span class="nf">bin_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">agg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="n">use_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Explain operation of DataMuxer.bin_on.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            source_name : string</span>
+<span class="sd">            interpolation : dict, optional</span>
+<span class="sd">                Override the default interpolation (upsampling) behavior of any</span>
+<span class="sd">                data source by passing a dictionary of source names mapped onto</span>
+<span class="sd">                one of the following interpolation methods.</span>
+
+<span class="sd">                {None, &#39;linear&#39;, &#39;nearest&#39;, &#39;zero&#39;, &#39;slinear&#39;, &#39;quadratic&#39;,</span>
+<span class="sd">                &#39;cubic&#39;}</span>
+
+<span class="sd">                None means that each time bin must have at least one value.</span>
+<span class="sd">                See scipy.interpolator for more on the other methods.</span>
+<span class="sd">            agg : dict, optional</span>
+<span class="sd">                Override the default reduction (downsampling) behavior of any</span>
+<span class="sd">                data source by passing a dictionary of source names mapped onto</span>
+<span class="sd">                any callable that reduces multiple data points (of whatever</span>
+<span class="sd">                dimension) to a single data point.</span>
+<span class="sd">            use_cols : list, optional</span>
+<span class="sd">                List of columns to include in binning; use all columns by</span>
+<span class="sd">                default.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            df : pandas.DataFrame</span>
+<span class="sd">                table giving upsample and downsample rules for each data column</span>
+<span class="sd">                and indicating whether those rules are applicable</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">            http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">centers</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">_bin_on</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+            <span class="n">bin_anchors</span><span class="p">,</span> <span class="n">binning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">_bin_by_edges</span><span class="p">(</span><span class="n">centers</span><span class="p">,</span> <span class="n">bin_edges</span><span class="p">)</span>
+            <span class="c"># TODO Cache the grouping for reuse by resample.</span>
+            <span class="n">grouped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dm</span><span class="o">.</span><span class="n">_dataframe</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">binning</span><span class="p">)</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_is_resampling_applicable</span><span class="p">(</span><span class="n">counts</span><span class="p">))</span>
+            <span class="n">df</span><span class="p">[</span><span class="s">&#39;upsample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">determine_upsample</span><span class="p">(</span><span class="n">interpolation</span><span class="p">,</span> <span class="n">use_cols</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s">&#39;downsample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">determine_downsample</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="n">use_cols</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">df</span>
+
+    <span class="n">default_upsample</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">default_downsample</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="DataMuxer.__init__"><a class="viewcode-back" href="../generated/datamuxer.DataMuxer.html#datamuxer.DataMuxer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sources</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ColSpec</span><span class="p">(</span><span class="s">&#39;time&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[],</span> <span class="s">&#39;linear&#39;</span><span class="p">,</span> <span class="s">&#39;mean&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timestamps</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timestamps_as_data</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_known_events</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_known_descriptors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stale</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Planner</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convert_times</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reference_time</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">reference_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reference_time</span>
+
+    <span class="nd">@reference_time.setter</span>
+    <span class="k">def</span> <span class="nf">reference_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reference_time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;s&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;The columns of DataFrames returned by methods that return DataFrames.&quot;</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">)</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_columns</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_time_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ts_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="o">+</span> <span class="s">&#39;_timestamp&#39;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamps_as_data</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;time&#39;</span><span class="p">}</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">ts_names</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DataMuxer.from_events"><a class="viewcode-back" href="../generated/datamuxer.DataMuxer.from_events.html#datamuxer.DataMuxer.from_events">[docs]</a>    <span class="k">def</span> <span class="nf">from_events</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">events</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a DataMuxer from a list of Events.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        events : list</span>
+<span class="sd">            list of Events (any objects with the expected attributes will do)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">instance</span> <span class="o">=</span> <span class="n">cls</span><span class="p">()</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">append_events</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">instance</span>
+</div>
+    <span class="k">def</span> <span class="nf">append_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">events</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a list of events to the DataMuxer.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        events : list</span>
+<span class="sd">            list of Events (any objects with the expected attributes will do)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">event</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">events</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">25</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;loading event </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">idx</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">append_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add an event to the DataMuxer.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        event : Event</span>
+<span class="sd">            Event Document or any object with the expected attributes</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        is_new : bool</span>
+<span class="sd">            True if event was added, False is it has already been added</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_known_events</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_known_events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stale</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">descriptor</span><span class="o">.</span><span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_known_descriptors</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_new_descriptor</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">descriptor</span><span class="p">)</span>
+        <span class="c"># Both scalar and nonscalar data will get stored in the DataFrame.</span>
+        <span class="c"># This may be optimized later, but it might not actually help much.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">data</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="p">)})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timestamps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">ts</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">timestamps</span><span class="p">)})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">_process_new_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">):</span>
+        <span class="s">&quot;Build a ColSpec and update state.&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">descriptor</span><span class="o">.</span><span class="n">data_keys</span><span class="p">):</span>
+
+            <span class="c"># If we already have this source name, the unique source</span>
+            <span class="c"># identifiers must match. Ambiguous names are not allowed.</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">!=</span> <span class="n">description</span><span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">]:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;In a previously loaded descriptor, &quot;</span>
+                                     <span class="s">&quot;&#39;{0}&#39; refers to {1} but in Event &quot;</span>
+                                     <span class="s">&quot;Descriptor {2} it refers to {3}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                         <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
+                                         <span class="n">descriptor</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span>
+                                         <span class="n">description</span><span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&#39;time&#39;</span><span class="p">:</span>
+                    <span class="c"># We can argue later about how best to handle this corner</span>
+                    <span class="c"># case, but anything is better than silently mislabeling</span>
+                    <span class="c"># data.</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The name &#39;time&#39; is reserved and cannot &quot;</span>
+                                     <span class="s">&quot;be used as an alias.&quot;</span><span class="p">)</span>
+
+            <span class="c"># If it is a new name, determine a ColSpec.</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span><span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s">&#39;external&#39;</span> <span class="ow">in</span> <span class="n">description</span> <span class="ow">and</span> <span class="s">&#39;shape&#39;</span> <span class="ow">in</span> <span class="n">description</span><span class="p">:</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="n">description</span><span class="p">[</span><span class="s">&#39;shape&#39;</span><span class="p">]</span>
+                    <span class="n">ndim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c"># External data can be scalar. Nonscalar data must</span>
+                    <span class="c"># have a specified shape. Thus, if no shape is given,</span>
+                    <span class="c"># assume scalar.</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="n">ndim</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">upsample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_upsample</span>
+                <span class="k">if</span> <span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">upsample</span> <span class="o">=</span> <span class="bp">None</span>
+
+                <span class="n">col_info</span> <span class="o">=</span> <span class="n">ColSpec</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">ndim</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">upsample</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">default_downsample</span><span class="p">)</span>  <span class="c"># defaults</span>
+                <span class="c"># TODO Look up source-specific default in a config file</span>
+                <span class="c"># or some other source of reference data.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">col_info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_known_descriptors</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">descriptor</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;See also to_sparse_dataframe, the public version of this.&quot;</span>
+        <span class="c"># Rebuild the DataFrame if more data has been added.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stale</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">))</span>
+            <span class="n">df</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamps_as_data</span><span class="p">:</span>
+                <span class="c"># Only build this if we need it.</span>
+                <span class="c"># TODO: We shouldn&#39;t have to build</span>
+                <span class="c"># the whole thing, but there is already a lot of trickiness</span>
+                <span class="c"># here so we&#39;ll worry about optimization later.</span>
+                <span class="n">timestamps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_timestamps</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">source_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamps_as_data</span><span class="p">:</span>
+                <span class="n">col_name</span> <span class="o">=</span> <span class="n">_timestamp_col_name</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestamps</span><span class="p">[</span><span class="n">source_name</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Including </span><span class="si">%s</span><span class="s"> timestamps as data&quot;</span><span class="p">,</span> <span class="n">source_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&#39;time&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stale</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span>
+
+<div class="viewcode-block" id="DataMuxer.to_sparse_dataframe"><a class="viewcode-back" href="../generated/datamuxer.DataMuxer.to_sparse_dataframe.html#datamuxer.DataMuxer.to_sparse_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">to_sparse_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_all_timestamps</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain all measurements in a DataFrame, one row per Event time.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        include_all_timestamps : bool</span>
+<span class="sd">            The result will always contain a &#39;time&#39; column but, by default,</span>
+<span class="sd">            not timestamps for individual data sources like &#39;motor_timestamp&#39;.</span>
+<span class="sd">            Set this to True to export timestamp columns for each data column</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">include_all_timestamps</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;TODO&quot;</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_columns</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_convert_times</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">col_name</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span>
+</div>
+    <span class="k">def</span> <span class="nf">_maybe_convert_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_times</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="n">TZ</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_time</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">t</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">t</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_time</span>
+        <span class="k">return</span> <span class="n">data</span>  <span class="c"># no-op</span>
+
+    <span class="k">def</span> <span class="nf">include_timestamp_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add the exact timing of a data source as a data column.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source_name : string</span>
+<span class="sd">            one of the source names in DataMuxer.sources</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># self._timestamps_as_data is a set of sources who timestamps</span>
+        <span class="c"># should be treated as data in the _dataframe method above.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timestamps_as_data</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">_timestamp_col_name</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ColSpec</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stale</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">remove_timestamp_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove the exact timing of a data source from the data columns.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source_name : string</span>
+<span class="sd">            one of the source names in DataMuxer.sources</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timestamps_as_data</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+        <span class="c"># Do not force a rebuilt (i.e., self._stale). Just remove it here.</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">[</span><span class="n">_timestamp_col_name</span><span class="p">(</span><span class="n">source_name</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="DataMuxer.bin_on"><a class="viewcode-back" href="../generated/datamuxer.DataMuxer.bin_on.html#datamuxer.DataMuxer.bin_on">[docs]</a>    <span class="k">def</span> <span class="nf">bin_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_name</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">agg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return data resampled to align with the data from a particular source.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source_name : string</span>
+<span class="sd">        interpolation : dict, optional</span>
+<span class="sd">            Override the default interpolation (upsampling) behavior of any</span>
+<span class="sd">            data source by passing a dictionary of source names mapped onto</span>
+<span class="sd">            one of the following interpolation methods.</span>
+
+<span class="sd">            {None, &#39;linear&#39;, &#39;nearest&#39;, &#39;zero&#39;, &#39;slinear&#39;, &#39;quadratic&#39;,</span>
+<span class="sd">             &#39;cubic&#39;}</span>
+
+<span class="sd">            None means that each time bin must have at least one value.</span>
+<span class="sd">            See scipy.interpolator for more on the other methods.</span>
+<span class="sd">        agg : dict, optional</span>
+<span class="sd">            Override the default reduction (downsampling) behavior of any data</span>
+<span class="sd">            source by passing a dictionary of source names mapped onto any</span>
+<span class="sd">            callable that reduces multiple data points (of whatever dimension)</span>
+<span class="sd">            to a single data point.</span>
+<span class="sd">        use_cols : list, optional</span>
+<span class="sd">            List of columns to include in binning; use all columns by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        resampled_df : pandas.DataFrame</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">centers</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bin_on</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_by_edges</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">,</span> <span class="n">bin_anchors</span><span class="o">=</span><span class="n">centers</span><span class="p">,</span>
+                                 <span class="n">interpolation</span><span class="o">=</span><span class="n">interpolation</span><span class="p">,</span> <span class="n">agg</span><span class="o">=</span><span class="n">agg</span><span class="p">,</span>
+                                 <span class="n">use_cols</span><span class="o">=</span><span class="n">use_cols</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_bin_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_name</span><span class="p">):</span>
+        <span class="s">&quot;Compute bin edges spaced around centers defined by source_name points.&quot;</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="p">[</span><span class="n">source_name</span><span class="p">]</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reindex_like</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="c"># [2, 4, 6] -&gt; [-inf, 3, 5, inf]</span>
+        <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">centers</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">centers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c"># [-inf, 3, 5, inf] -&gt; [(-inf, 3), (3, 5), (5, inf)]</span>
+        <span class="n">bin_edges</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span>
+        <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">centers</span><span class="p">,</span> <span class="n">bin_edges</span>
+
+<div class="viewcode-block" id="DataMuxer.bin_by_edges"><a class="viewcode-back" href="../generated/datamuxer.DataMuxer.bin_by_edges.html#datamuxer.DataMuxer.bin_by_edges">[docs]</a>    <span class="k">def</span> <span class="nf">bin_by_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bin_edges</span><span class="p">,</span> <span class="n">bin_anchors</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">agg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                     <span class="n">use_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return data resampled into bins with the specified edges.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bin_edges : list</span>
+<span class="sd">            list of two-element items like [(t1, t2), (t3, t4), ...]</span>
+<span class="sd">        bin_anchors : list</span>
+<span class="sd">            These are time points where interpolated values will be evaluated.</span>
+<span class="sd">            Bin centers are usually a good choice.</span>
+<span class="sd">        interpolation : dict, optional</span>
+<span class="sd">            Override the default interpolation (upsampling) behavior of any</span>
+<span class="sd">            data source by passing a dictionary of source names mapped onto</span>
+<span class="sd">            one of the following interpolation methods.</span>
+
+<span class="sd">            {None, &#39;linear&#39;, &#39;nearest&#39;, &#39;zero&#39;, &#39;slinear&#39;, &#39;quadratic&#39;,</span>
+<span class="sd">             &#39;cubic&#39;}</span>
+
+<span class="sd">            None means that each time bin must have at least one value.</span>
+<span class="sd">            See scipy.interpolator for more on the other methods.</span>
+<span class="sd">        agg : dict, optional</span>
+<span class="sd">            Override the default reduction (downsampling) behavior of any data</span>
+<span class="sd">            source by passing a dictionary of source names mapped onto any</span>
+<span class="sd">            callable that reduces multiple data points (of whatever dimension)</span>
+<span class="sd">            to a single data point.</span>
+<span class="sd">        use_cols : list, optional</span>
+<span class="sd">            List of columns to include in binning; use all columns by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        resampled_df : pandas.DataFrame</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bin_anchors</span><span class="p">,</span> <span class="n">binning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bin_by_edges</span><span class="p">(</span><span class="n">bin_anchors</span><span class="p">,</span> <span class="n">bin_edges</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">bin_anchors</span><span class="p">,</span> <span class="n">binning</span><span class="p">,</span> <span class="n">interpolation</span><span class="p">,</span> <span class="n">agg</span><span class="p">,</span>
+                             <span class="n">use_cols</span><span class="o">=</span><span class="n">use_cols</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_bin_by_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bin_anchors</span><span class="p">,</span> <span class="n">bin_edges</span><span class="p">):</span>
+        <span class="s">&quot;Compute bin assignment and, if needed, bin_anchors.&quot;</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="c"># Get edges into 1D array[L, R, L, R, ...]</span>
+        <span class="n">edges_as_pairs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">all_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">edges_as_pairs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">all_edges</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Illegal binning: the left edge must be less &quot;</span>
+                             <span class="s">&quot;than the right edge.&quot;</span><span class="p">)</span>
+        <span class="c"># Sort out where the array each time would be inserted.</span>
+        <span class="n">binning</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">all_edges</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="c"># Times that would get inserted at even positions are between bins.</span>
+        <span class="c"># Mark them</span>
+        <span class="n">binning</span><span class="p">[</span><span class="n">binning</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">binning</span> <span class="o">//=</span> <span class="mi">2</span>  <span class="c"># Make bin number sequential, not odds only.</span>
+        <span class="k">if</span> <span class="n">bin_anchors</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">bin_anchors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">edges_as_pairs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c"># bin centers</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_anchors</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;There are {0} bin_anchors but {1} pairs of &quot;</span>
+                                 <span class="s">&quot;bin_edges. These must match.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                     <span class="nb">len</span><span class="p">(</span><span class="n">bin_anchors</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">bin_anchors</span><span class="p">,</span> <span class="n">binning</span>
+
+    <span class="k">def</span> <span class="nf">resample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bin_anchors</span><span class="p">,</span> <span class="n">binning</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">agg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">verify_integrity</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">use_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return data resampled into bins with the specified edges.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bin_anchors : list</span>
+<span class="sd">            These are time points where interpolated values will be evaluated.</span>
+<span class="sd">            Bin centers are usually a good choice.</span>
+<span class="sd">        bin_anchors : list</span>
+<span class="sd">            Bin assignment. Example: [1, 1, 2, 2, 3, 3] puts six data points</span>
+<span class="sd">            into three bins with two points each.</span>
+<span class="sd">        interpolation : dict, optional</span>
+<span class="sd">            Override the default interpolation (upsampling) behavior of any</span>
+<span class="sd">            data source by passing a dictionary of source names mapped onto</span>
+<span class="sd">            one of the following interpolation methods.</span>
+
+<span class="sd">            {None, &#39;linear&#39;, &#39;nearest&#39;, &#39;zero&#39;, &#39;slinear&#39;, &#39;quadratic&#39;,</span>
+<span class="sd">             &#39;cubic&#39;}</span>
+
+<span class="sd">            None means that each time bin must have at least one value.</span>
+<span class="sd">            See scipy.interpolator for more on the other methods.</span>
+<span class="sd">        agg : dict, optional</span>
+<span class="sd">            Override the default reduction (downsampling) behavior of any data</span>
+<span class="sd">            source by passing a dictionary of source names mapped onto any</span>
+<span class="sd">            callable that reduces multiple data points (of whatever dimension)</span>
+<span class="sd">            to a single data point.</span>
+<span class="sd">        verify_integrity : bool, optional</span>
+<span class="sd">            For a cost in performance, verify that the downsampling function</span>
+<span class="sd">            produces data of the expected shape. True by default.</span>
+<span class="sd">        use_cols : list, optional</span>
+<span class="sd">            List of columns to include in binning; use all columns by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        resampled_df : pandas.DataFrame</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">use_cols</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">use_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span>
+        <span class="n">plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Planner</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">upsampling_rules</span> <span class="o">=</span> <span class="n">plan</span><span class="o">.</span><span class="n">determine_upsample</span><span class="p">(</span><span class="n">interpolation</span><span class="p">,</span> <span class="n">use_cols</span><span class="p">)</span>
+        <span class="n">downsampling_rules</span> <span class="o">=</span> <span class="n">plan</span><span class="o">.</span><span class="n">determine_downsample</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="n">use_cols</span><span class="p">)</span>
+        <span class="n">grouped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">binning</span><span class="p">)</span>
+        <span class="n">first_point</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="n">resampling_requirements</span> <span class="o">=</span> <span class="n">_is_resampling_applicable</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bin_anchors</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c"># dict of DataFrames, to become one MultiIndexed DataFrame</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">use_cols</span><span class="p">:</span>
+            <span class="n">upsample</span> <span class="o">=</span> <span class="n">upsampling_rules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">downsample</span> <span class="o">=</span> <span class="n">downsampling_rules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">upsampling_possible</span> <span class="o">=</span> <span class="n">resampling_requirements</span><span class="p">[</span><span class="s">&#39;upsampling_possible&#39;</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">downsampling_needed</span> <span class="o">=</span> <span class="n">resampling_requirements</span><span class="p">[</span><span class="s">&#39;downsampling_needed&#39;</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+            <span class="c"># Put the first (maybe only) value into a Series.</span>
+            <span class="c"># We will overwrite as needed below.</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;val&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">first_point</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+
+            <span class="c"># Short-circuit if we are done.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">upsampling_possible</span> <span class="ow">or</span> <span class="n">downsampling_needed</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> has exactly one data point per bin&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+            <span class="c"># If any bin has no data, use the upsampling rule to interpolate</span>
+            <span class="c"># at the center of the empty bins. If there is no rule, simply</span>
+            <span class="c"># leave some bins empty. Do not raise an error.</span>
+            <span class="k">if</span> <span class="n">upsampling_possible</span> <span class="ow">and</span> <span class="p">(</span><span class="n">upsample</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">upsample</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;ffill&#39;</span><span class="p">,</span> <span class="s">&#39;bfill&#39;</span><span class="p">):</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;val&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">upsample</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dense_col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">dense_col</span><span class="o">.</span><span class="n">values</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reindex_like</span><span class="p">(</span><span class="n">dense_col</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+                    <span class="n">interpolator</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">upsample</span><span class="p">)</span>
+                    <span class="c"># Outside the limits of the data, the interpolator will</span>
+                    <span class="c"># fail.  Leave any such entires empty.</span>
+                    <span class="n">is_safe</span> <span class="o">=</span> <span class="p">((</span><span class="n">bin_anchors</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&amp;</span>
+                               <span class="p">(</span><span class="n">bin_anchors</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+                    <span class="n">safe_times</span> <span class="o">=</span> <span class="n">bin_anchors</span><span class="p">[</span><span class="n">is_safe</span><span class="p">]</span>
+                    <span class="n">safe_bins</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">is_safe</span><span class="p">]</span>
+                    <span class="n">interp_points</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">interpolator</span><span class="p">(</span><span class="n">safe_times</span><span class="p">),</span>
+                                              <span class="n">index</span><span class="o">=</span><span class="n">safe_bins</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Interpolating to fill </span><span class="si">%d</span><span class="s"> of </span><span class="si">%d</span><span class="s"> &quot;</span>
+                                 <span class="s">&quot;empty bins in </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span>
+                                 <span class="nb">len</span><span class="p">(</span><span class="n">safe_bins</span><span class="p">),</span> <span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span>
+                                 <span class="n">name</span><span class="p">)</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;val&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">interp_points</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="c"># Short-circuit if we are done.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">downsampling_needed</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> has at most one data point per bin&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c"># Multi-valued bins must be downsampled (reduced). If there is no</span>
+            <span class="c"># rule for downsampling, we have no recourse: we must raise.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">downsample</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">BinningError</span><span class="p">(</span><span class="s">&quot;The specified binning puts multiple &quot;</span>
+                                   <span class="s">&quot;&#39;{0}&#39; measurements in at least one bin, &quot;</span>
+                                   <span class="s">&quot;and there is no rule for downsampling &quot;</span>
+                                   <span class="s">&quot;(i.e., reducing) it.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">verify_integrity</span> <span class="ow">and</span> <span class="nb">callable</span><span class="p">(</span><span class="n">downsample</span><span class="p">):</span>
+                <span class="n">downsample</span> <span class="o">=</span> <span class="n">_build_verified_downsample</span><span class="p">(</span>
+                    <span class="n">downsample</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+            <span class="n">g</span> <span class="o">=</span> <span class="n">grouped</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>  <span class="c"># for brevity</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;The scalar column </span><span class="si">%s</span><span class="s"> must be downsampled.&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                <span class="c"># For scalars, pandas knows what to do.</span>
+                <span class="n">downsampled</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">downsample</span><span class="p">)</span>
+                <span class="n">std_series</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+                <span class="n">max_series</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+                <span class="n">min_series</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># For nonscalars, we are abusing groupby and must go to a</span>
+                <span class="c"># a little more trouble to guarantee success.</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;The nonscalar column </span><span class="si">%s</span><span class="s"> must be downsampled.&quot;</span><span class="p">,</span>
+                             <span class="n">name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">downsample</span><span class="p">):</span>
+                    <span class="c"># Do this lookup here so that strings can be passed</span>
+                    <span class="c"># in the call to resample.</span>
+                    <span class="n">downsample</span> <span class="o">=</span> <span class="n">ColSpec</span><span class="o">.</span><span class="n">_downsample_mapping</span><span class="p">[</span><span class="n">downsample</span><span class="p">]</span>
+                <span class="n">downsampled</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">downsample</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dropna</span><span class="p">())))</span>
+                <span class="n">std_series</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dropna</span><span class="p">()),</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">max_series</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dropna</span><span class="p">()),</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">min_series</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dropna</span><span class="p">()),</span> <span class="mi">0</span><span class="p">))</span>
+
+            <span class="c"># This (counts[name] &gt; 1) is redundant, but there is no clean way to</span>
+            <span class="c"># pass it here without refactoring. Not a huge cost.</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;val&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">),</span> <span class="n">downsampled</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">std_series</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_series</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_series</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c"># one MultiIndexed DataFrame</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;bin&#39;</span>
+
+        <span class="c"># Convert time timestamp or timedelta, depending on the state of</span>
+        <span class="c"># self.convert_times and self.reference_time.</span>
+        <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">col_name</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+                <span class="n">subcols</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span>
+                <span class="k">for</span> <span class="n">subcol</span> <span class="ow">in</span> <span class="n">subcols</span> <span class="o">&amp;</span> <span class="p">{</span><span class="s">&#39;max&#39;</span><span class="p">,</span> <span class="s">&#39;min&#39;</span><span class="p">,</span> <span class="s">&#39;val&#39;</span><span class="p">}:</span>
+                    <span class="n">result</span><span class="p">[(</span><span class="n">col_name</span><span class="p">,</span> <span class="n">subcol</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_convert_times</span><span class="p">(</span>
+                            <span class="n">result</span><span class="p">[(</span><span class="n">col_name</span><span class="p">,</span> <span class="n">subcol</span><span class="p">)])</span>
+                <span class="k">for</span> <span class="n">subcol</span> <span class="ow">in</span> <span class="n">subcols</span> <span class="o">&amp;</span> <span class="p">{</span><span class="s">&#39;std&#39;</span><span class="p">}:</span>
+                    <span class="n">result</span><span class="p">[(</span><span class="n">col_name</span><span class="p">,</span> <span class="n">subcol</span><span class="p">)]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span>
+                            <span class="n">result</span><span class="p">[(</span><span class="n">col_name</span><span class="p">,</span> <span class="n">subcol</span><span class="p">)],</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;s&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_convert_times</span><span class="p">(</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">col_name</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">source_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;No data from a source called &#39;{0}&#39; has been &quot;</span>
+                           <span class="s">&quot;added.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">))</span>
+        <span class="c"># Unlike output from binning functions, this is indexed</span>
+        <span class="c"># on time.</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="p">[</span><span class="n">source_name</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reindex_like</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="c"># Developer beware: if any properties raise an AttributeError,</span>
+        <span class="c"># this will mask it. Comment this magic method to debug properties.</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s">&quot;DataMuxer has no attribute {0} and no &quot;</span>
+                                  <span class="s">&quot;data source named &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ncols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of columns that the DataMuxer contains</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">col_info_by_ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dictionary mapping dimensionality (ndim) onto a list of ColSpecs&quot;&quot;&quot;</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">col_spec</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col_info</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col_spec</span><span class="o">.</span><span class="n">ndim</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col_spec</span><span class="o">.</span><span class="n">ndim</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">col_spec</span><span class="o">.</span><span class="n">ndim</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col_spec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+</div>
+<div class="viewcode-block" id="dataframe_to_dict"><a class="viewcode-back" href="../generated/datamuxer.dataframe_to_dict.html#datamuxer.dataframe_to_dict">[docs]</a><span class="k">def</span> <span class="nf">dataframe_to_dict</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Turn a DataFrame into a dict of lists.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : DataFrame</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    index : ndarray</span>
+<span class="sd">        The index of the data frame</span>
+<span class="sd">    data : dict</span>
+<span class="sd">        Dictionary keyed on column name of the column.  The value is</span>
+<span class="sd">        one of (ndarray, list, pd.Series)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dict_of_lists</span> <span class="o">=</span> <span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dict_of_lists</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_build_verified_downsample</span><span class="p">(</span><span class="n">downsample</span><span class="p">,</span> <span class="n">expected_shape</span><span class="p">):</span>
+    <span class="c"># Ensure two things:</span>
+    <span class="c"># 1. The downsampling function shouldn&#39;t touch bins with only one point.</span>
+    <span class="c"># 2. The result of downsample should have the right shape.</span>
+    <span class="k">def</span> <span class="nf">_downsample</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="n">downsampled</span> <span class="o">=</span> <span class="n">downsample</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">expected_shape</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">expected_shape</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">downsampled</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">BadDownsamplerError</span><span class="p">(</span><span class="s">&quot;The &#39;agg&#39; (downsampling) function &quot;</span>
+                                          <span class="s">&quot;for {0} is expected to produce &quot;</span>
+                                          <span class="s">&quot;a scalar from the data in each &quot;</span>
+                                          <span class="s">&quot;bin.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">downsampled</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">downsampled</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">expected_shape</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BadDownsamplerError</span><span class="p">(</span><span class="s">&quot;An &#39;agg&#39; (downsampling) function &quot;</span>
+                                      <span class="s">&quot;returns data shaped {0} but the &quot;</span>
+                                      <span class="s">&quot;shape {1} is expected.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                          <span class="n">downsampled</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">expected_shape</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">downsampled</span>
+    <span class="k">return</span> <span class="n">_downsample</span>
+
+
+<span class="k">def</span> <span class="nf">_timestamp_col_name</span><span class="p">(</span><span class="n">source_name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&#39;{0}_timestamp&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_normalize_string_none</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+    <span class="s">&quot;Replay passes &#39;None&#39; to mean None.&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lowercase_val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">val</span>
+    <span class="k">if</span> <span class="n">lowercase_val</span> <span class="o">==</span> <span class="s">&#39;none&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">val</span>
+
+
+<span class="k">def</span> <span class="nf">_is_resampling_applicable</span><span class="p">(</span><span class="n">counts</span><span class="p">):</span>
+    <span class="n">has_no_points</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">has_multiple_points</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">&gt;</span> <span class="mi">1</span>
+    <span class="n">upsampling_possible</span> <span class="o">=</span> <span class="n">has_no_points</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+    <span class="n">downsampling_needed</span> <span class="o">=</span> <span class="n">has_multiple_points</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s">&#39;upsampling_possible&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">upsampling_possible</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="n">result</span><span class="p">[</span><span class="s">&#39;downsampling_needed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">downsampling_needed</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015 Brookhaven National Lab.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.0.6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+datamuxer.DataMuxer.from_events
+===============================
+
+.. currentmodule:: datamuxer
+
+.. automethod:: DataMuxer.from_events

@@ -1,0 +1,6 @@
+datamuxer.DataMuxer.to_sparse_dataframe
+=======================================
+
+.. currentmodule:: datamuxer
+
+.. automethod:: DataMuxer.to_sparse_dataframe

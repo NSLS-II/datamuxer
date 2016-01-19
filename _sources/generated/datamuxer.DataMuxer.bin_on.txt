@@ -1,0 +1,6 @@
+datamuxer.DataMuxer.bin_on
+==========================
+
+.. currentmodule:: datamuxer
+
+.. automethod:: DataMuxer.bin_on

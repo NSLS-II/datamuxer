@@ -1,0 +1,6 @@
+datamuxer.dataframe_to_dict
+===========================
+
+.. currentmodule:: datamuxer
+
+.. autofunction:: dataframe_to_dict

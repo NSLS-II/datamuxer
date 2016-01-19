@@ -1,0 +1,6 @@
+datamuxer.BinningError
+======================
+
+.. currentmodule:: datamuxer
+
+.. autoexception:: BinningError

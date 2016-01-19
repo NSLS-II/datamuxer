@@ -1,0 +1,231 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>datamuxer.DataMuxer.bin_by_edges &mdash; DataMuxer 0.0.6 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="DataMuxer 0.0.6 documentation" href="../index.html"/>
+        <link rel="next" title="datamuxer.DataMuxer.bin_on" href="datamuxer.DataMuxer.bin_on.html"/>
+        <link rel="prev" title="datamuxer.DataMuxer" href="datamuxer.DataMuxer.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> DataMuxer</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="datamuxer.DataMuxer.html">datamuxer.DataMuxer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">datamuxer.DataMuxer.bin_by_edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datamuxer.DataMuxer.bin_on.html">datamuxer.DataMuxer.bin_on</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datamuxer.DataMuxer.from_events.html">datamuxer.DataMuxer.from_events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datamuxer.DataMuxer.to_sparse_dataframe.html">datamuxer.DataMuxer.to_sparse_dataframe</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="datamuxer.ColSpec.html">datamuxer.ColSpec</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="datamuxer.dataframe_to_dict.html">datamuxer.dataframe_to_dict</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="datamuxer.BinningError.html">datamuxer.BinningError</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datamuxer.BadDownsamplerError.html">datamuxer.BadDownsamplerError</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">DataMuxer</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>datamuxer.DataMuxer.bin_by_edges</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/generated/datamuxer.DataMuxer.bin_by_edges.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="datamuxer-datamuxer-bin-by-edges">
+<h1>datamuxer.DataMuxer.bin_by_edges<a class="headerlink" href="#datamuxer-datamuxer-bin-by-edges" title="Permalink to this headline">¶</a></h1>
+<dl class="method">
+<dt id="datamuxer.DataMuxer.bin_by_edges">
+<code class="descclassname">DataMuxer.</code><code class="descname">bin_by_edges</code><span class="sig-paren">(</span><em>bin_edges</em>, <em>bin_anchors</em>, <em>interpolation=None</em>, <em>agg=None</em>, <em>use_cols=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datamuxer.html#DataMuxer.bin_by_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datamuxer.DataMuxer.bin_by_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return data resampled into bins with the specified edges.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bin_edges</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of two-element items like [(t1, t2), (t3, t4), ...]</li>
+<li><strong>bin_anchors</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; These are time points where interpolated values will be evaluated.
+Bin centers are usually a good choice.</li>
+<li><strong>interpolation</strong> (<em>dict, optional</em>) &#8211; <p>Override the default interpolation (upsampling) behavior of any
+data source by passing a dictionary of source names mapped onto
+one of the following interpolation methods.</p>
+<dl class="docutils">
+<dt>{None, &#8216;linear&#8217;, &#8216;nearest&#8217;, &#8216;zero&#8217;, &#8216;slinear&#8217;, &#8216;quadratic&#8217;,</dt>
+<dd>&#8216;cubic&#8217;}</dd>
+</dl>
+<p>None means that each time bin must have at least one value.
+See scipy.interpolator for more on the other methods.</p>
+</li>
+<li><strong>agg</strong> (<em>dict, optional</em>) &#8211; Override the default reduction (downsampling) behavior of any data
+source by passing a dictionary of source names mapped onto any
+callable that reduces multiple data points (of whatever dimension)
+to a single data point.</li>
+<li><strong>use_cols</strong> (<em>list, optional</em>) &#8211; List of columns to include in binning; use all columns by default.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>resampled_df</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p><a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html">http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html</a></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="datamuxer.DataMuxer.bin_on.html" class="btn btn-neutral float-right" title="datamuxer.DataMuxer.bin_on">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datamuxer.DataMuxer.html" class="btn btn-neutral" title="datamuxer.DataMuxer"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015 Brookhaven National Lab.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.0.6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

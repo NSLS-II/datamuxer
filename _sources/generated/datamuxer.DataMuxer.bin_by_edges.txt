@@ -1,0 +1,6 @@
+datamuxer.DataMuxer.bin_by_edges
+================================
+
+.. currentmodule:: datamuxer
+
+.. automethod:: DataMuxer.bin_by_edges

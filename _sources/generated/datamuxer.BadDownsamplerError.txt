@@ -1,0 +1,6 @@
+datamuxer.BadDownsamplerError
+=============================
+
+.. currentmodule:: datamuxer
+
+.. autoexception:: BadDownsamplerError

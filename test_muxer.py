@@ -10,7 +10,7 @@ from databroker.examples.sample_data import (temperature_ramp, multisource_event
                                              image_and_scalar)
 from databroker import DataBroker
 from filestore.test.utils import fs_setup, fs_teardown
-from metadatastore.utils.testing import mds_setup, mds_teardown
+from metadatastore.test.utils import mds_setup, mds_teardown
 from metadatastore.api import insert_run_start
 
 from nose.tools import (assert_true, assert_false)

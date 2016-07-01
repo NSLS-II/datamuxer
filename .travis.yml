@@ -17,7 +17,7 @@ before_install:
   - . ~/scripts/init-filestore.sh
 
 install:
-  - conda create -n testenv pip nose python=$TRAVIS_PYTHON_VERSION six numpy pandas h5py coverage jsonschema jinja2 scipy pyyaml mongoengine tzlocal prettytable boltons pymongo pims tifffile tzlocal
+  - conda create -n testenv pip nose python=$TRAVIS_PYTHON_VERSION six numpy pandas h5py coverage jsonschema jinja2 scipy pyyaml mongoengine tzlocal prettytable boltons pymongo pims tifffile tzlocal databroker
   - source activate testenv
   # install all the pip deps
   - pip install coveralls

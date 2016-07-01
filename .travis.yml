@@ -4,6 +4,13 @@ sudo: false
 services:
   - mongodb
 
+addons:
+  apt:
+    sources:
+    - mongodb-3.2-precise
+    packages:
+    - mongodb-org-server
+
 matrix:
   include:
     - python: 2.7
@@ -21,6 +28,7 @@ install:
   - source activate testenv
   # this next line can be removed as soon as conda-forge fixes their pinnings. See https://github.com/conda-forge/staged-recipes/issues/907
   - conda install icu
+  - python -c "from filestore import utils, conf; utils.install_sentinels(conf.connection_config, 1)"
   # install all the pip deps
   - pip install coveralls
   - pip install codecov

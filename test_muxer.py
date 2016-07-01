@@ -12,7 +12,7 @@ from datamuxer import DataMuxer, BinningError, ColSpec
 from databroker.examples.sample_data import (temperature_ramp, multisource_event,
                                              image_and_scalar)
 from databroker import DataBroker
-from filestore.utils.testing import fs_setup, fs_teardown
+from filestore.test.utils import fs_setup, fs_teardown
 from metadatastore.utils.testing import mds_setup, mds_teardown
 from metadatastore.api import insert_run_start
 
